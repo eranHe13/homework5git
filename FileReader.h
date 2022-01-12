@@ -22,6 +22,8 @@ private:
 
 
 public:
+
+    // constructor
     FileReader(char *fileName);
 
     virtual ~FileReader();
