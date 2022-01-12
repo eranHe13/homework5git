@@ -28,6 +28,12 @@ public:
     // calc the (xVector - e)square
     void func();
 
+    int getRank() const;
+
+    void setRank(int rank);
+
+    bool operator<=(const Element &  other)const;
+
      ~Element();
 
 };

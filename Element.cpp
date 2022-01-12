@@ -20,14 +20,14 @@ rank(-1) {
 Element::~Element() {
 
     delete [] funcResult;
-
+    delete [] xVector;
 }
 
 void Element::func() {
-
+    double * e=new double [n_val];;
     for (int i = 0; i < m; ++i) {
         //init e vector;
-        double * e=new double [n_val];
+
         for (int j = 0; j < n_val; ++j) {
             e[j]=i+1;
         }
@@ -38,5 +38,33 @@ void Element::func() {
         }
         funcResult[i]=sum;
     }
-
+    delete [] e;
 }
+
+bool Element::operator<=(const Element &  other)const {
+
+    int equalCounter=0;
+    int smallCounter=0;
+    for (int i = 0; i < m; ++i) {
+        if(this->funcResult[i]==other.funcResult[i]){
+            equalCounter++;
+            smallCounter++;
+        }
+        if(this->funcResult[i]<other.funcResult[i]){
+            smallCounter++;
+        }
+        if (smallCounter==m&&equalCounter>1){
+            return true;
+        }
+    }
+    return false;
+}
+
+int Element::getRank() const {
+    return rank;
+}
+
+void Element::setRank(int rank) {
+    Element::rank = rank;
+}
+

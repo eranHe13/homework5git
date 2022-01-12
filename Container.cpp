@@ -77,3 +77,24 @@ void Container:: print_results(char* file_name)
     }
 
 }
+
+
+// check how many of elements "control" on other element
+// and set the current rank for the element
+void Container::rankTheElement() {
+
+    int rankPoints;
+    for (int i = 0; i < n_of_elements; ++i) {
+        rankPoints=0;
+        for (int j = 0; j < n_of_elements; ++j) {
+            if (i==j){
+                continue;
+            }
+            if (elements[i]->operator<=(*elements[j])){
+                rankPoints++;
+            }
+        }
+        elements[i]->setRank(rankPoints);
+    }
+
+}
