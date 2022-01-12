@@ -3,4 +3,4 @@ project(homework5git)
 
 set(CMAKE_CXX_STANDARD 98)
 
-add_executable(homework5git main.cpp)
+add_executable(homework5git main.cpp FileReader.cpp FileReader.h)
