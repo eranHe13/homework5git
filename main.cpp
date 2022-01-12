@@ -10,6 +10,7 @@ int main(int argc, char** argv) {
     FileReader fileReader(file);
     double ** matrix=fileReader.getMatrix();
     int * arguments=fileReader.argumentsForContainer();
-
+// test updat
+int a;
     return 0;
 }
