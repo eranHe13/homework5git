@@ -1,7 +1,7 @@
 //
 // Created by User on 12/01/2022.
 //
-#include <cmath>
+
 #include "Element.h"
 
 Element::Element(int nVal, double *xVector, int m) : n_val(nVal), m(m),
@@ -66,5 +66,16 @@ int Element::getRank() const {
 
 void Element::setRank(int rank) {
     Element::rank = rank;
+}
+
+string Element::getfuncResult() const {
+stringstream ss;
+string  toReturn;
+    for (int i = 0; i < m; ++i) {
+        double temp=funcResult[i];
+        ss<<setprecision(6)<<fixed<<temp;
+        toReturn.append(ss.str()).append(" ");
+    }
+    return toReturn;
 }
 

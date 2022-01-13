@@ -98,3 +98,17 @@ void Container::rankTheElement() {
     }
 
 }
+
+void Container::writeToFile() const {
+    string filename="out.dat";
+    // need to change for  file name !!!!!
+    ofstream resultFile(filename.c_str(),ios::out);
+    if (!resultFile.is_open()) {
+        string err="ERROR: ";
+        throw logic_error( err+ filename + " does not exist or cannot be opened\n");
+    }
+    for (int i = 0; i < n_of_elements; ++i) {
+        resultFile<<elements[i]->getfuncResult().c_str()<<endl;
+    }
+    resultFile.close();
+}

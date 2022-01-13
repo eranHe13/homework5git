@@ -1,8 +1,13 @@
 
 #ifndef HOMEWORK5GIT_ELEMENT_H
 #define HOMEWORK5GIT_ELEMENT_H
-
-
+#include <string>
+#include <cmath>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
+using namespace std;
 class Element {
 
     // this class hold element data
@@ -36,6 +41,7 @@ public:
 
      ~Element();
 
+    string getfuncResult()const;
 };
 
 
