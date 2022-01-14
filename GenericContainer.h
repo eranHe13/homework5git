@@ -11,8 +11,15 @@
 #include <map>
 
 using namespace std;
-
 template<class C , class E>
+struct node{
+    E* data;
+    int key;
+
+    struct node* next;
+};
+
+
 class GenericContainer {
 private:
     int n_of_elements; // mue
@@ -34,17 +41,16 @@ public:
             elements.push_back(curr);
         }}*/
 
-    void set(C** matrix , int n_elems , int n_values , int n_after_func){
+    void set(C matrix , int n_elems , int n_values , int n_after_func){
         n_of_elements= n_elems;
         n_values=n_values;
         n_values_after_func=n_after_func;
         randomVector = new C[n_values];
         for(int i = 0 ; i < n_of_elements ; i++)
-        {   E* curr = new E( n_values,matrix[i] , n_after_func);
-            if(elements.size() == 0) {
-                elements.insert(pair<int, dynamic_cast<E>(curr)>(0 , curr));
-            }
-            elements.push_back(0,curr);
+        {
+            E* curr = new E( n_values,matrix[i] , n_after_func);
+            elements.insert({-1 , curr});
+            elements.insert( {-1,curr});
         }
     };
 

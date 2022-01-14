@@ -4,18 +4,17 @@
 
 #ifndef HOMEWORK5GIT_CONTAINER_H
 #define HOMEWORK5GIT_CONTAINER_H
-#import<vector>
-#include <random>
+#include <vector>
+//#include <random>
 #include <time.h>
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-
-#import"Element.h"
+#include "genericSort.h"
+#include "Element.h"
 
 using namespace std;
 class Element;
-
 
 class Container {
 private:

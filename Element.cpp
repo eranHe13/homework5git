@@ -14,6 +14,7 @@ rank(-1) {
     }
     // create f result
     funcResult=new double [m];
+    func();
 
 }
 
@@ -23,6 +24,9 @@ Element::~Element() {
     delete [] xVector;
 }
 
+double Element::getvalue(int index){
+    return xVector[index];
+}
 void Element::func() {
     double * e=new double [n_val];;
     for (int i = 0; i < m; ++i) {
@@ -46,14 +50,13 @@ bool Element::operator<=(const Element &  other)const {
     int equalCounter=0;
     int smallCounter=0;
     for (int i = 0; i < m; ++i) {
+        if(this->funcResult[i]<=other.funcResult[i]){
+            smallCounter++;
+        }
         if(this->funcResult[i]==other.funcResult[i]){
             equalCounter++;
-            smallCounter++;
         }
-        if(this->funcResult[i]<other.funcResult[i]){
-            smallCounter++;
-        }
-        if (smallCounter==m&&equalCounter>1){
+        if ((equalCounter <m) && (smallCounter == m) ){
             return true;
         }
     }
@@ -69,13 +72,21 @@ void Element::setRank(int rank) {
 }
 
 string Element::getfuncResult() const {
-stringstream ss;
 string  toReturn;
     for (int i = 0; i < m; ++i) {
         double temp=funcResult[i];
+        stringstream ss;
+        ss.clear();
         ss<<setprecision(6)<<fixed<<temp;
-        toReturn.append(ss.str()).append(" ");
+        toReturn+=ss.str();
+        if (i<m-1)
+            toReturn+=" ";
+
+
     }
     return toReturn;
 }
 
+int Element::operator[](int x) const {
+    return rank;
+}

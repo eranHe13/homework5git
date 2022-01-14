@@ -42,7 +42,13 @@ public:
      ~Element();
 
     string getfuncResult()const;
-};
+
+    double getvalue(int index);
+
+    int operator[](int x) const ;
+
+
+    };
 
 
 #endif //HOMEWORK5GIT_ELEMENT_H

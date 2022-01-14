@@ -3,7 +3,6 @@
 
 
 
-
 Container::Container(double** matrix , int n_elems , int n_values , int n_after_func):
         n_of_elements(n_elems), n_values(n_values) , n_values_after_func(n_after_func)
 {/// \param counstructor set data members of containers initializing the elements
@@ -15,38 +14,45 @@ Container::Container(double** matrix , int n_elems , int n_values , int n_after_
     randomVector = new double[n_values];
     for(int i = 0 ; i < n_of_elements ; i++)
     {   Element* curr = new Element(n_values , matrix[i] , n_after_func);
-        if(elements.size() == 0){
-            elements.insert(elements.begin()  , curr);
-        }
         elements.push_back(curr);
+        cout<< curr->getfuncResult() << endl;
+
     }}
 
 /// \param simulate - control func on the simulations
 /// \param n_simulate number of simulation from the user
 void Container::simulates(int n_simulate)
 {
+
     for(int i = 0 ; i < n_simulate ; i++)
     {   resize_elements(); // crate more n_elems
-        //pareToSorting(&elements)
-
+        d.ParetoSorting( elements, n_of_elements);
+        genericSort<Element>::pareToSorting(elements);
+        rankTheElement();
     }
+    writeToFile();
+
 }
 
 
 /// \param resize_elements - crate new n_elements
 void Container:: resize_elements()
-{   int j ; // index for the exists elements
+{   int curr_elem ; // index for the exists elements
     double res[n_values]; // the new value of this new element
     for(int i =n_of_elements;i < 2*n_of_elements ; i++)
     { // loop for n_elements times
         get_random_vector(); // set randomVector
-        for(int k = 0;k <n_values ; k++){
-         res[k] = add_vectors(j, k); // crate new value -  adding element[j] value with randomVector
+        for(int curr_index = 0;curr_index <n_values ; curr_index++){
+            res[curr_index] = add_vectors(curr_elem, curr_index); // crate new value -  adding element[j] value with randomVector
         }
-        j++;
+        curr_elem++;
+        Element* e = new Element(n_values , res , n_values_after_func);// crate new element
+        cout << e->getfuncResult() << endl;
+
+        elements.push_back(e);// adding to the container
+
     }
-    Element* e = new Element(n_values , res , n_values_after_func);// crate new element
-    elements.push_back(e);// adding to the container
+
 }
 
 /// \param add_vectors - crate new vector
@@ -54,7 +60,7 @@ void Container:: resize_elements()
 /// \param curr_index - index for the randomVector
 double Container:: add_vectors(int curr_elem , int curr_index){
     double res;
-    res = randomVector[curr_index] + elements[curr_elem][curr_index]; // un finish
+    res = randomVector[curr_index] + elements[curr_elem]->getvalue(curr_index); // un finish
     return res;
 }
 
@@ -63,20 +69,24 @@ void Container::get_random_vector()
 {
     srand( (unsigned)time( NULL ) );
     double val;
+    cout<<"random vec  ";
     for(int i = 0;i < n_values;i++){
         randomVector[i] = (double ) rand()/RAND_MAX;
+        cout<<randomVector[i]<<" ";
     }
+    cout<<endl;
+
 }
 
 
 
-void Container:: print_results(char* file_name)
-{
-    for (int i = 0; i < n_of_elements; i++) {
-        elements[i].print_results();
-    }
-
-}
+//void Container:: print_results(char* file_name)
+//{
+//    for (int i = 0; i < n_of_elements; i++) {
+//        elements[i].print_results();
+//    }
+//
+//}
 
 
 // check how many of elements "control" on other element
@@ -84,9 +94,9 @@ void Container:: print_results(char* file_name)
 void Container::rankTheElement() {
 
     int rankPoints;
-    for (int i = 0; i < n_of_elements; ++i) {
+    for (int i = 0; i < 2*n_of_elements; ++i) {
         rankPoints=0;
-        for (int j = 0; j < n_of_elements; ++j) {
+        for (int j = 0; j < 2*n_of_elements; ++j) {
             if (i==j){
                 continue;
             }
