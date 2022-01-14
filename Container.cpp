@@ -14,7 +14,7 @@ Container::Container(double** matrix , int n_elems , int n_values , int n_after_
 
     randomVector = new double[n_values];
     for(int i = 0 ; i < n_of_elements ; i++)
-    {   Element* curr = new Element(&matrix[i]);
+    {   Element* curr = new Element(n_values , matrix[i] , n_after_func);
         if(elements.size() == 0){
             elements.insert(elements.begin()  , curr);
         }
@@ -45,7 +45,7 @@ void Container:: resize_elements()
         }
         j++;
     }
-    Element* e = new Element(res);// crate new element
+    Element* e = new Element(n_values , res , n_values_after_func);// crate new element
     elements.push_back(e);// adding to the container
 }
 
@@ -54,7 +54,7 @@ void Container:: resize_elements()
 /// \param curr_index - index for the randomVector
 double Container:: add_vectors(int curr_elem , int curr_index){
     double res;
-    res = randomVector[curr_index] + elements[curr_elem].get_value(i); // un finish
+    res = randomVector[curr_index] + elements[curr_elem][curr_index]; // un finish
     return res;
 }
 
