@@ -1,12 +1,12 @@
 #include "Element.h"
 
-Element::Element(int nVal, double *xVector, int m) : n_val(nVal), m(m),
+Element::Element(int nVal, double *xVector1, int m) : n_val(nVal), m(m),
                                                      rank(0) {
 
     // deep copy-
     this->xVector=new double [nVal];
     for (int i = 0; i < nVal; ++i) {
-        this->xVector[i]=xVector[i];
+        this->xVector[i]=xVector1[i];
     }
     // create f result
     funcResult=new double [m];
@@ -24,10 +24,15 @@ double Element::getvalue(int index){
     return xVector[index];
 }
 void Element::func() {
-    double x;
-    double y;
+    for (int i = 0; i < m; i++) {
+        double sum =0;
+        for (int j = 0; j < n_val; j++) {
+            sum+=pow((xVector[j]-(i+1)) , 2);
+        }
+        funcResult[i] =sum;
+    }
 
-    double * e=new double [n_val];;
+    /*double * e=new double [n_val];;
     for (int i = 0; i < m; ++i) {
         //init e vector;
 
@@ -38,11 +43,10 @@ void Element::func() {
         double sum=0;
         for (int k = 0; k < n_val; ++k) {
             sum+= pow((this->xVector[k]-e[k]),2);
-            x = sum;
         }
         funcResult[i]=sum;
     }
-    delete [] e;
+    delete [] e;*/
 }
 
 bool Element::operator<(const Element*  other)const {
