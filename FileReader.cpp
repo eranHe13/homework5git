@@ -1,7 +1,3 @@
-//
-// Created by noame on 1/11/2022.
-//
-
 #include "FileReader.h"
 
 FileReader::FileReader(char *fileName) : fileName(fileName), size(0), N(0) {
@@ -42,7 +38,7 @@ void FileReader::validationForSize() const {
     }
     if ((counter - 1) != size) {
         string err = "ERROR: simulation definition in ";
-       throw logic_error( err + fileName + " is invalid\n");
+        throw logic_error( err + fileName + " is invalid\n");
     }
     file.close();
 }
@@ -126,7 +122,7 @@ void FileReader::readMatrix() {
                 string str = ss.str();
                 string err;
                 err.append("ERROR: population definition in ").append(fileName).append("at line ")
-                .append(str).append("is invalid\n");
+                        .append(str).append("is invalid\n");
                 throw logic_error(err);
             }
             j = 0;
@@ -139,4 +135,3 @@ void FileReader::readMatrix() {
 int *FileReader::getArguments() const {
     return arguments;
 }
-

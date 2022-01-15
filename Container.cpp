@@ -1,5 +1,5 @@
-
 #include "Container.h"
+#include <typeinfo>
 
 
 
@@ -11,26 +11,29 @@ Container::Container(double** matrix , int n_elems , int n_values , int n_after_
 /// \param n_values number of values in each element
 /// \param n_after_func number of values after func in each element
 
+    srand( (unsigned)time( NULL ) );
+
     randomVector = new double[n_values];
     for(int i = 0 ; i < n_of_elements ; i++)
     {   Element* curr = new Element(n_values , matrix[i] , n_after_func);
         elements.push_back(curr);
-        cout<< curr->getfuncResult() << endl;
 
     }}
 
 /// \param simulate - control func on the simulations
 /// \param n_simulate number of simulation from the user
 void Container::simulates(int n_simulate)
-{
-
+{   int x = 0;
     for(int i = 0 ; i < n_simulate ; i++)
-    {   resize_elements(); // crate more n_elems
-        d.ParetoSorting( elements, n_of_elements);
-        genericSort<Element>::pareToSorting(elements);
-        rankTheElement();
+    {
+        resize_elements(); // crate more n_elems
+        genericSort< vector<Element* > , Element > G(elements );
+        elements =  G.ParetoSorting(2*n_of_elements);
+        elements.erase(elements.begin()+(n_of_elements) , elements.end() );
+        clearRank();
     }
-    writeToFile();
+
+
 
 }
 
@@ -47,7 +50,6 @@ void Container:: resize_elements()
         }
         curr_elem++;
         Element* e = new Element(n_values , res , n_values_after_func);// crate new element
-        cout << e->getfuncResult() << endl;
 
         elements.push_back(e);// adding to the container
 
@@ -67,15 +69,11 @@ double Container:: add_vectors(int curr_elem , int curr_index){
 /// \param get_random_vector - get random number [0,1]
 void Container::get_random_vector()
 {
-    srand( (unsigned)time( NULL ) );
     double val;
-    cout<<"random vec  ";
     for(int i = 0;i < n_values;i++){
         randomVector[i] = (double ) rand()/RAND_MAX;
-        cout<<randomVector[i]<<" ";
-    }
-    cout<<endl;
 
+    }
 }
 
 
@@ -91,7 +89,7 @@ void Container::get_random_vector()
 
 // check how many of elements "control" on other element
 // and set the current rank for the element
-void Container::rankTheElement() {
+/*void Container::rankTheElement() {
 
     int rankPoints;
     for (int i = 0; i < 2*n_of_elements; ++i) {
@@ -107,7 +105,7 @@ void Container::rankTheElement() {
         elements[i]->setRank(rankPoints);
     }
 
-}
+}*/
 
 void Container::writeToFile() const {
     string filename="out.dat";
@@ -119,6 +117,26 @@ void Container::writeToFile() const {
     }
     for (int i = 0; i < n_of_elements; ++i) {
         resultFile<<elements[i]->getfuncResult().c_str()<<endl;
+        cout << elements[i]->getfuncResult().c_str()<<endl;
     }
     resultFile.close();
+}
+
+Element* Container::operator[](int x) const {
+    return this->elements[x];
+}
+
+Container::Container():n_of_elements(NULL),n_values(NULL),n_values_after_func(NULL),elements(NULL),randomVector(NULL)
+{}
+Container::Container(const Container *p1){
+    this->n_of_elements = p1->n_of_elements;
+    this->n_values = p1->n_values;
+    this->n_values_after_func = n_values_after_func;
+    this->elements = p1->elements;
+    this->randomVector = p1->randomVector;
+}
+void Container:: clearRank(){
+    for(int i =0 ; i < elements.size() ; i++){
+        elements[i]->setRank(0);
+    }
 }

@@ -1,11 +1,7 @@
-//
-// Created by User on 12/01/2022.
-//
-
 #include "Element.h"
 
 Element::Element(int nVal, double *xVector, int m) : n_val(nVal), m(m),
-rank(-1) {
+                                                     rank(0) {
 
     // deep copy-
     this->xVector=new double [nVal];
@@ -28,6 +24,9 @@ double Element::getvalue(int index){
     return xVector[index];
 }
 void Element::func() {
+    double x;
+    double y;
+
     double * e=new double [n_val];;
     for (int i = 0; i < m; ++i) {
         //init e vector;
@@ -39,26 +38,31 @@ void Element::func() {
         double sum=0;
         for (int k = 0; k < n_val; ++k) {
             sum+= pow((this->xVector[k]-e[k]),2);
+            x = sum;
         }
         funcResult[i]=sum;
     }
     delete [] e;
 }
 
-bool Element::operator<=(const Element &  other)const {
-
+bool Element::operator<(const Element*  other)const {
+    double x;
+    double y;
     int equalCounter=0;
     int smallCounter=0;
-    for (int i = 0; i < m; ++i) {
-        if(this->funcResult[i]<=other.funcResult[i]){
+    for (int i = 0; i < m; i++) {
+        //cout <<this->funcResult[i]<<" -- " << other->funcResult[i] << endl;
+        x = this->funcResult[i];
+        y = other->funcResult[i];
+        if(this->funcResult[i]<=other->funcResult[i]){ // x<=y
             smallCounter++;
         }
-        if(this->funcResult[i]==other.funcResult[i]){
+        if(this->funcResult[i]==other->funcResult[i]){ //x == y
             equalCounter++;
         }
-        if ((equalCounter <m) && (smallCounter == m) ){
-            return true;
-        }
+    }
+    if ((equalCounter <m) && (smallCounter == m) ){ //
+        return true;
     }
     return false;
 }
@@ -72,7 +76,7 @@ void Element::setRank(int rank) {
 }
 
 string Element::getfuncResult() const {
-string  toReturn;
+    string  toReturn;
     for (int i = 0; i < m; ++i) {
         double temp=funcResult[i];
         stringstream ss;
@@ -88,5 +92,24 @@ string  toReturn;
 }
 
 int Element::operator[](int x) const {
-    return rank;
+    return this->rank;
+}
+
+void Element:: operator++()  {
+    this->rank+=1;
+}
+Element:: Element():n_val(NULL) , xVector(NULL),m(NULL),funcResult(NULL),rank(NULL){}
+
+Element:: Element(const Element *p1){
+
+    this->n_val = p1->n_val;
+    this->xVector = p1->xVector;
+    this->m = p1->m;
+    this->funcResult = p1->funcResult;
+    this->rank = p1->rank;
+}
+
+
+bool Element::operator>(const Element* other) const{
+    return this->rank > other->rank;
 }

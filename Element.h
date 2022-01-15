@@ -1,4 +1,3 @@
-
 #ifndef HOMEWORK5GIT_ELEMENT_H
 #define HOMEWORK5GIT_ELEMENT_H
 #include <string>
@@ -37,15 +36,22 @@ public:
 
     void setRank(int rank);
 
-    bool operator<=(const Element &  other)const;
+    bool operator<(const Element*  other)const;
 
-     ~Element();
+    ~Element();
 
     string getfuncResult()const;
 
     double getvalue(int index);
 
     int operator[](int x) const ;
+    void operator++()  ;
+
+    Element();
+
+    Element(const Element *p1) ;
+
+    bool operator>(const Element* other) const;
 
 
     };

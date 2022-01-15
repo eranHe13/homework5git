@@ -1,7 +1,3 @@
-//
-// Created by User on 12/01/2022.
-//
-
 #ifndef HOMEWORK5GIT_CONTAINER_H
 #define HOMEWORK5GIT_CONTAINER_H
 #include <vector>
@@ -15,7 +11,6 @@
 
 using namespace std;
 class Element;
-
 class Container {
 private:
     int n_of_elements; // mue
@@ -26,6 +21,7 @@ private:
 
 
 public:
+    Container();
     Container(double** matrix , int n_elems , int n_values , int n_after_func);
 
     void simulates(int n_simulate);
@@ -39,6 +35,9 @@ public:
     // run on all the element and rank each one
     void rankTheElement();
     void writeToFile()const;
+    Element* operator[](int x) const ;
+    Container(const Container *p1);
+    void clearRank();
 };
 
 

@@ -15,7 +15,8 @@ int main(int argc, char** argv) {
     double ** matrix=fileReader.getMatrix();
     int * arguments=fileReader.getArguments();
     Container container(matrix , arguments[0] ,arguments[1], arguments[2]);
-    container.simulates(1);
+    container.simulates(500);
+    container.writeToFile();
 
 //    GenericContainer<double** , Element> e;
 //    e.set(matrix , arguments[0] ,arguments[1], arguments[2]);
