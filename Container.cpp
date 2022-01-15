@@ -25,7 +25,7 @@ Container::Container(double** matrix , int n_elems , int n_values , int n_after_
 void Container::simulates(int n_simulate)
 {   int x = 0;
     for(int i = 0 ; i < n_simulate ; i++)
-    {
+    {/
         resize_elements(); // crate more n_elems
         genericSort< vector<Element* > , Element > G(elements );
         elements =  G.ParetoSorting(2*n_of_elements);

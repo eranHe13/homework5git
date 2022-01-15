@@ -31,7 +31,7 @@ public:
     void  print_results(char* file_name);
 
 
-
+//
     // run on all the element and rank each one
     void rankTheElement();
     void writeToFile()const;
