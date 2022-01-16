@@ -22,6 +22,7 @@ private:
 
 public:
     Container();
+    ~Container();
     Container(double** matrix , int n_elems , int n_values , int n_after_func);
 
     void simulates(int n_simulate);
@@ -29,12 +30,15 @@ public:
     void get_random_vector();
     double add_vectors(int curr_elem , int curr_index);
     void  print_results(char* file_name);
+    void  setElementFunc();
+
+
 
 
 //
     // run on all the element and rank each one
     void rankTheElement();
-    void writeToFile()const;
+    void writeToFile(char* filename)const;
     Element* operator[](int x) const ;
     Container(const Container *p1);
     void clearRank();

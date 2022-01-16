@@ -26,6 +26,10 @@ private:
     // rank of Element
     int rank;
 
+    int f1;
+    int f2;
+    int f3;
+
 // constructor
 public:
     Element(int nVal, double *xVector, int m);
